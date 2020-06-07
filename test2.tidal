@@ -1,0 +1,63 @@
+d1 $ s "bd" # n "4 1 4 1"
+
+d1 silence
+
+:t s "bd"
+:t n "1 2"
+:t n
+:t s
+:t (+|)
+:t (#)
+
+d2 $ every 2 (|> speed "1.6") $ s "bd hh [hh hh] sn*2" # n "1 1 2 3" # speed "1.1" 
+    # gain (every 3 (rev) $ "1 0.8 1.1 1")
+
+d4 silence
+
+d3 $ every 3 (|- n "3") $ every 2 (|+ up "5") $ s "arpy*4" |> n "0 2 4 5"
+
+every 2 (rev) $ s "bd hh [hh hh] sn*2" # n "1 1 2 3"
+
+d4 $ n (off 0.125 (+12) $ off 0.25 (+7) $ slow 2 $ "0(2,8) [5 7]") 
+    # sound "supergong"
+    # room 0.2
+
+d1 $ every 4 (const $ sound "bd*4 sn*2") $ sound "bd sn bass2 sn"
+
+d1 $ whenmod 8 6 (# speed "2") $ s "bd arpy*2 cp bass2"
+
+d1 $ slow 2 $ whenmod 5 3 (# speed "0.75 1.5") $ stack [
+ sound "bd bd*2",
+ sound "hh*2 [sn cp] cp future*4",
+ sound (samples "arpy*8" (run 16))
+] # speed "[[1 0.8], [1.5 2]*2]/3" # cut "1 2"
+
+d1 $ midinote "60 62*4" # s "supersaw"
+
+d1 $ whenmod 5 3 (rev) $ n "<[g5 df5 e5 a5] [gf5 d5 c5 g5]*3>" 
+    # s "supersaw"
+    # sustain "0.4 0.2"
+
+d1 $ jux (# accelerate "-0.1") $ s "supermandolin*8" # midinote "[80!6 78]/8"
+ # sustain "1 0.25 2 1"
+
+
+d1 $ s "super808 supersnare" # n (irand 5)
+ # voice "0.2" # decay "[2 0.5]/4" # accelerate "-0.1" # sustain "0.5" # speed "[0.5 2]/4"
+
+d1 $ n (slow 8 "[[c5 e5 g5 c6]*4 [b4 e5 g5 b5]*4]") # s "superpiano"
+ # velocity "[1.20 0.9 0.8 1]"
+
+d1 $ n (every 2 (rev) $ slow 4 $ "[[c4,e4,g4,c5]*4 [e4,g4,b5,e5]*4]"+"<7 12 5>") 
+ # s "superpiano"
+ # velocity (slow 4 $ range 0.8 1.1 sine) 
+ # sustain "8"
+
+d2 $ juxBy 0.5 rev $ chunk 4 ((+ speed (1 + sine)) . ply 8) $ note "c2 e2" # sound "bass"
+  # speed "<4 4>"
+  # legato 1
+
+d1 silence
+
+
+:t n (slow 4 $ "[[c4,e4,g4,c5]*4 [e4,g4,b5,e5]*4]" + "<12 7>") # s "superpiano"

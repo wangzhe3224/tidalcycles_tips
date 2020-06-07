@@ -1,0 +1,18 @@
+hush
+
+let
+    inverse 1 = 0
+    inverse 0 = 1
+
+do 
+    let pat = "[1 0 0 0 1 0 1 1]"
+    d1 $ gain pat # s "drum"
+    d2 $ gain (inverse <$> pat) # s "cp"
+    d3 $ foldEvery [2,3] (0.25 <~) $ gain (pat) # s "ch"
+    d4 $ foldEvery [3,4] (0.5 <~) $ gain (inverse <$> pat) # s "s"
+
+-- basically Pattern is a Functor, that's why inverse can be used to Pattern
+
+:t (inverse <$> pat)
+
+:t gain (inverse <$> pat)

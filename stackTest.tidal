@@ -1,0 +1,37 @@
+d1 $ stack [
+    s "bd"
+    -- , s "~ hh ~ hh"
+    -- s "~ ~ [cp cp] ~" # n "2"
+]
+
+hush
+
+d1 silence
+
+d2 $ slow 2 $ n ("c e d g" |+ "<'maj 'min>") # s "superpiano"
+    # sustain "2"
+    # room 0.3
+
+d3 $ slow 4 $ chunk 4 (|- note 5) $ jux rev 
+     $ arp "<pinkyup down thumbup up>" $ n "c'maj'4 e4'min'8 f4'maj'4"
+     # s "<superpiano>"
+     # sustain 2
+     # room 0.5
+     # sz 0.8
+     # amp 0.4
+
+p "bass" $ n "c ~ ~ ~" # s "bass" # crush "3"
+
+d1 $ every 5 (|+| speed "0.5") $ every 4 (0.25 <~) $ every 3 (rev) $
+  sound "bd sn arpy*2 cp"
+  # speed "[1 1.25 0.75 -1.5]/3"
+
+let pitches = "<c a> <f g>"
+
+d4 $ jux rev $ stack[
+    n (pitches) # s "superpiano" # gain "0.8" # cut 2
+  , n ((|+5) pitches) # sound "supermandolin" # cut 4
+  , n ((|+3) pitches) # sound "supermandolin" # sus 1
+] # room 0.2 # sz 0.1
+
+hush
