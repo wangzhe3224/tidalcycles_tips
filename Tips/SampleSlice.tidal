@@ -1,0 +1,20 @@
+-- How to slice a sample to match beat?
+
+bps 1
+
+d1 $ s "toys:12"  -- this is a long sample, and we got overlap in different cycles
+
+-- use striate function to chop sample and play them in a row
+d1 $ striate 64 (s "toys:12")
+
+-- and you can do all fun stuff without worry mismatch beat..
+
+d1 $ every 4 (0.25 <~) $ every 2 rev $ slow 2 $ striate 64 ( s "toys:12" )
+
+-- and more ...
+
+d1 $ every 4 (0.25 <~) $ every 2 rev $ slow 2 $ striate 64 ( s "toys:12" )
+    |+| speed "[1 1 1 0.8]/5"
+    |+| resonance "0.1"
+
+hush
