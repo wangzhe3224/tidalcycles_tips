@@ -1,0 +1,14 @@
+do
+    let bars = 4
+        key = "8"
+        righthand = "[[4 -3] [0 _ _ _ _ _ 0]] [[-3, -8] [7 5 4 0]]"
+        lefthand = "[0 9 12 16] [4 12 16 19] [5 12 17 19] [2 12 17 16]"
+    d1  $ slow bars
+        $ stack [
+            n (righthand + key + "<24 36>/2")
+            , n (lefthand + key)
+        ]
+        # s "superpiano"
+        # octave "3"
+        # velocity "0.6 0.7 0.8 0.9"
+        # sustain "[2 0.7]*4"
