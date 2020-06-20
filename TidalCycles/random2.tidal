@@ -1,0 +1,26 @@
+hush
+
+let pat = "0 1 1 2 0 1 1"
+
+d1 $ s ( fmap (["bd", "cp", "odx"]!!) $ pat)
+
+d1 $ plyWith "<10 20 30 10>" ( |* legato 0.95 ) $ s "latibro" # legato 1 # speed "[1,2,3]"
+
+d1 $ stack [
+      sometimesBy 0.2 (stutWith 2 (0.0625) id) $ s "{bd@7}%16"
+    , s "hh(3,8)" 
+    , plyWith "<20>" (# gain 0.9) $ s "latibro" # legato 1 
+      # lpf (choose [200, 300, 250])
+    ]
+
+d1 $ stutWith 3 (1/6) (|* speed "{1.5 1.2}") $ s "arpy arpy:2"
+
+d1 $ stut 4 0.6 0.1 $ s "bd sn"  -- echo
+
+d1 $ stutWith 3 (1/3) (# vowel "{a e i o u}%2") $ sound "bd sn"
+
+hush
+
+:t stutWith 3 (1/6) (|* speed "1.5")
+
+stutWith 3 (1/6) (|* speed "{1.5 1.2}") $ s "arpy arpy:2"

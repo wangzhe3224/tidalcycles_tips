@@ -1,0 +1,103 @@
+let mf x = fst $ pF x (Just 0)
+
+    -- mi x = fst $ pI x (Just 0)
+    -- infS :: Int -> Int
+    -- infS n | n == 0         = 0
+    --        | n `mod` 2 == 0 = - infS (n `div` 2)
+    --        | otherwise      = 1 + infS ((n-1) `div` 2)
+    -- infT :: Int -> Int
+    -- infT n | n == 0         = 0
+    --        | n `mod` 4 == 0 = infT n'
+    --        | n `mod` 4 == 1 = infT n' - 2
+    --        | n `mod` 4 == 2 = (- infT n') - 1
+    --        | n `mod` 4 == 3 = infT n' + 2
+    --   where n' = n `div` 4
+    -- infU :: Int -> Int
+    -- infU n | n == 0         = 0
+    --        | n `mod` 3 == 0 = -infU n'
+    --        | n `mod` 3 == 1 = infU n' - 2
+    --        | n `mod` 3 == 2 = infU n' - 1
+    --   where n' = n `div` 3
+    -- infV :: Int -> Int
+    -- infV n | n == 0         = 0
+    --        | n `mod` 3 == 0 = -infV n'
+    --        | n `mod` 3 == 1 = infV n' - 3
+    --        | n `mod` 3 == 2 = -infV n' - 2
+    --   where n' = n `div` 3
+    sometimesBy' x f p = (1024 ~>) $ sometimesBy x f p
+    necho x = echo $ negate x
+    ntrip x = triple $ negate x
+    juxp panpat f p = stack [p # pan panpat, f $ p # pan (fmap (1-) panpat)]
+    funrun m n = every 2 (fmap (+ m)) $ run n
+    beginend bpat durpat = (begin bpat) # (end $ (+) <$> bpat <*> durpat)
+    withArc (s,e) f p = stack [sliceArc (0,s) p, f $ sliceArc (s,e) p, sliceArc (e,1) p]
+    shiftArc (s,e) t = withArc (s,e) (t ~>)
+    reslice n = fit' 1 n (_run n)
+    fm = mf "fm"
+    fmf = mf "fmf"
+    modamp = mf "modamp"
+    modfreq = mf "modfreq"
+    feedback = mf "feedback"
+    wub = mf "wub"
+    wubn = mf "wubn"
+    wubf = mf "wubf"
+    wubw = mf "wubw"
+    wubd = mf "wubd"
+    wubt = mf "wubt"
+    wubp = mf "wubp"
+    wubv = mf "wubv"
+    wrap = mf "wrap"
+    wrapoff = mf "wrapoff"
+    rect = mf "rect"
+    rectoff = mf "rectoff"
+    envsaw = mf "envsaw"
+    envsawf = mf "envsawf"
+    comp = mf "comp"
+    compa = mf "compa"
+    compr = mf "compr"
+    distort = mf "distort"
+    boom = mf "boom"
+    gboom = mf "gboom"
+    tape = mf "tape"
+    taped = mf "taped"
+    tapefb = mf "tapefb"
+    tapec = mf "tapec"
+    vibrato = mf "vibrato"
+    vrate = mf "vrate"
+    leslie = mf "leslie"
+    lrate = mf "lrate"
+    lsize = mf "lsize"
+    perc = mf "perc"
+    percf = mf "percf"
+    gcutoff = mf "gcutoff"
+    gresonance = mf "gresonance"
+    wall = mf "wall"
+    walllev = mf "walllev"
+    krush = mf "krush"
+    kcutoff = mf "kcutoff"
+    ring = mf "ring"
+    ringf = mf "ringf"
+    ringdf = mf "ringdf"
+    octer = mf "octer"
+    octersub = mf "octersub"
+    octersubsub = mf "octersubsub"
+    sparkle = mf "sparkle"
+    sparklef = mf "sparklef"
+    amdist = mf "amdist"
+    amdistf = mf "amdistf"
+    fmdist = mf "fmdist"
+    fmdistf = mf "fmdistf"
+    (fattack, fattack_p) = pF "fattack" (Just 0)
+    (fhold, fhold_p) = pF "fhold" (Just 1)
+    (frelease, frelease_p) = pF "frelease" (Just 0)
+    (fenv, fenv_p) = pF "fenv" (Just 0)
+    fmod = grp [fenv_p, fattack_p, fhold_p, frelease_p]
+    flfo = mf "flfo"
+    flfof = mf "flfof"
+    allpass = mf "allpass"
+    (sfcutoff, sfcutoff_p) = pF "sfcutoff" (Just 1000)
+    (sfresonance, sfresonance_p) = pF "sfresonance" (Just 0)
+    (sfattack, sfattack_p) = pF "sfattack" (Just 0)
+    (sfrelease, sfrelease_p) = pF "sfrelease" (Just 0)
+    (sfenv, sfenv_p) = pF "sfenv" (Just 0)
+    sfmod = grp [sfcutoff_p, sfresonance_p, sfenv_p, sfattack_p, sfrelease_p]

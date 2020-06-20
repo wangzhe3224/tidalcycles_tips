@@ -1,0 +1,96 @@
+d1 $ sometimes (jux rev) $ density "4" $ every 2 ((1/2) <~) $ superimpose (iter 4) $ s "bd hh hh@2"
+
+p "melody" $ fast 2 $ jux rev $ n (
+        every 8 (off 0.125 (|+ 12))
+        $ off 0.125 (|+ 5) 
+        -- $ off 0.25 (|- 3)
+        "<c*2 a(3,8) f(3,8,2) e*2>"
+    ) 
+    # s "supermandolin"
+    # legato 2
+    # room 0.5
+    # size 0.8
+
+
+do
+  let chord = "<c*2 e(3,8) d(3,8,2) g*2>"
+  d1 $ stack [
+        sometimes (jux rev) $ density "4" $ every 2 ((1/2) <~) $ superimpose (iter 4) $ s "bd hh hh@2"
+        , fast 2 $ jux rev $ n chord # s "supermandolin" # legato 2 # room 0.5  # size 0.8
+        ]
+  d2 $ s "bass" # n chord # gain "1"
+
+
+-- create customized functions
+
+let x myspeed mystriate = (|* speed  myspeed) . every 2 rev . striate mystriate
+    m = (const $ s "~")
+    rotate n xs = zipWith const (drop n (cycle xs)) xs
+    swing n = inside n (whenmod 2 1 ((1/3) ~>))
+    -- swing' p = wedge (2/3) (sliceArc (0,0.5) p) (sliceArc (0.5,1) p)
+    rip a b p = within (0.25, 0.75) (slow 2 . rev . stut 8 a b) p
+    rip' a b c d e p = within (a, b) (slow 2 . rev . stut c d e) p
+    ghost'' a f p = superimpose (((a/2 + a*2) ~>) . f) $ superimpose (((a + a/2) ~>) . f) $ p
+    ghost p = ghost' 0.125 p
+
+d1 $ stack [
+  x "{2 3}" 8 $ s "bd hh bd hh"
+  , ghost $ s "arpy*4"
+]
+
+--morgans lxr control
+--
+--88 - E7 - oh
+--89 - F7 - ch
+--90 - F#7 - cp
+--92 - G#7 - sn
+--93 - A7 - bd 
+--95 - C8 - tm1
+--96 - B7 - tm2
+
+bpm 80
+
+--sweep
+d2 $ every 2 (spin 2) $ slowcat [
+  note "[93 95 96 92 90 88 89]", 
+  note "[93*4?, 88*2?, 89*3?]", 
+  note "[96 ~ ~ 96 [89 89 88] ~ 92]", 
+  note "[93 ~ ~ 93 ~ ~ 93 ~, ~ ~ 88 89 ~ ~ 88 ~, 96 96 ~ ~ 96 ~ ~]"
+  ] # s "superpiano"
+
+k1 $ rarely (degradeBy 0.8) $ rarely (density 2) $ sometimes (spin 2) $ note "[93 ~ ~ 93 ~ ~ 93 ~, 92*8?, 90*12?, 92*4?, 89*7?]"
+
+k1 $ rarely (density 2) $ sometimes (slow 2 . spin 3) $ note "[~ ~ 93, 95 96 96, 90*6?]"
+
+--
+d1 $ slow 2 $ rarely (brak) $ every 2 (0.5 ~>) $ every 4 (0.25 <~) 
+   $ rarely (degradeBy 0.8) $ rarely (density 2) $ sometimes (spin 2) $ 
+   s "superpiano" # cat [
+   n "[93 ~ ~ 93 ~ ~ 93 ~,92*8?, 90*12?,92*4?, 89*7?]", 
+   n "[93*4, 89*8?, 90*6]",
+   n "[93*8?, 95 ~ 96 95?, 92*3?, 88*8? 89*8?]"
+   ]
+
+d1 $ rarely (brak) $ sound "[xx ~ ~ xx:2 ~ ~ xx:2 ~, xx*8?]"
+
+d2 $ slow 2 $ sound (samples "amencutup*16" (run 16))
+   |+| crush (scale 0.2 0.9 sine)
+   |+| delay "0.2"
+   |+| delayfeedback "0.2"
+   |+| gain "0.0"
+
+k1 $ sometimes (degradeBy 0.8) $ every 4 (rev) $ 
+     note "[93 ~ ~ 93 ~ ~ 93 ~,92*8?, 90*12?,92*4?, 89*7?]"
+
+d1 $ sound ("superpiano*4")
+   |+| accelerate "-0.1"
+   |+| gain "1.4"
+
+d3 $ sound "superpiano:3"
+   |+| gain "1.5"
+
+d2 $ sound "[loop loop loop loop]"
+   |+| gain "1.9"
+
+
+hush
