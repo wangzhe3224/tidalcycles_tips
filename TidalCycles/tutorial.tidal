@@ -1,0 +1,163 @@
+-- Official Doc
+-- https://tidalcycles.org/index.php/Tutorial
+-- Check following as well
+-- https://tidalcycles.org/index.php/Tidal_workshop_worksheet
+d1 $ s "bd:3"
+
+d2 $ s "hh hh hh hh"
+
+p "susan" $ s "arpy"
+
+d1 $ s "bd sn . cp/2"  -- [bd sn] cp  -> [bd sn] ~
+
+d1 $ every 4 (fast 2) $ every 2 (rev) $ s "bd [hh:2 hh]"
+
+d1 $ s "bd*4" # crush "4" # speed "2"
+
+d1 $ s "bd*4 sn*4" # gain "[1 0.8 . 0.5 0.7]/2"
+
+d1 $ gain "1 1.1 1.2 1.3" # s "bd"
+
+d1 $ every 2 (|> speed "2") $ s "arpy*4" |> speed "1"
+
+d1 $ every 3 (|- n "3") $ s "arpy*4" |> note "0 2 4 5"
+
+d1 $ n (off 0.125 (+12) $ off 0.25 (+7) $ slow 2 $ "0(3,8) [5 7]") # s "supergong"
+
+d1 $ n "[0 .. 7]" # s "supergong"
+
+d1 $ speed "[1 0.5, 1.5 4 3]" # s "arpy"
+
+d1 $ up (run 12) # s "arpy"
+
+d1 $ s "bd(3,8) sn(5,8,2)"
+
+d2 $ s "hh hh cp cp"
+
+d1 $ slow 4 $ s "bd(11,24,5)"
+
+d1 $ s "cp(3,8)" # cps (slow 8 $ range 0.8 1.6 saw)
+
+d1 $ up "0 0*2 0*4 1" # s "[arpy, bass2, bd]"
+
+d1 $ s "[arpy, bass2, bd]" <| up "0 0*2 0*4 1"
+
+d1 $ s "drum cp" |> n "0 0 1 0"
+
+-- Continuous Patterns
+d1 $ s "bd*16" |> pan sine  -- |> is #. Always takes the pattern on the pipe side priority
+
+d1 $ s "bd*8 sn*8" # pan (slow 8 $ tri)
+
+d1 $ s "bd:2*16" # pan (slowcat [sine, saw, square, tri])
+
+-- add scale of oscillation
+d1 $ s "bd*8" # speed (slow 4 $ range 1 3 $ tri)
+
+d1 $ s "hh*32" # cutoff (range 300 100 $ slow 4 $ sine) 
+
+-- Rest
+d1 $ s "~ sd ~ hh"
+
+-- Ploymeters
+d1 $ s "{bd hh sn cp, arpy bass2 drum notes can}"
+
+d1 $ s "{arpy bass2 drum notes can, bd hh sn cp}"
+
+d1 $ s "{arpy bass2 drum notes can}%4"
+
+-- shift time
+d1 $ every 3 (0.25 <~) $ s "bd*2 cp*2 hh sn"
+
+d1 $ s "bd*2 cp*2 hh sn"
+
+-- Randomness
+d1 $ s "arpy*4" # pan (rand)
+
+d1 $ s "arpy" # n (irand 30)
+
+d1 $ s "arpy" >| speed "1 2 3" |< n "1 2 3" 
+
+d1 $ s "bd? cp*2?"
+
+d1 $ s "[bd sn cp hh]?"
+
+d1 $ degradeBy 0.25 $ s "bd*16"
+
+d1 $ sometimesBy 0.75 (# crush 4) $ sound "bd arpy sn ~"
+
+-- short cut..
+d1 $ often (|> crush "4") $ s "bd*8"
+
+-- Variation in patterns
+d1 $ whenmod 8 6 (rev) $ every 5 (|+| speed "0.5") $ every 4 (0.25 <~) $ every 3 (rev)
+   $ s "bd sn arpy*2 cp"
+   # speed "[1 1.24 0.75 -1.5]/3"
+
+d1 $ s "bd sn" # speed "-1" -- reverse a sample...
+
+-- Fills and const
+d1 $ const (s "arpy*3") $ s "bd sn cp hh"
+
+d1 $ every 2 (const (s "arpy*3")) $ s "bd sn cp hh"
+
+d1 $ whenmod 8 7 (const (s "arpy*3")) $ s "bd sn cp hh"
+
+-- Composing Patterns
+d1 $ fastcat [ -- squeeze all into 1 cycle
+    s "bd sn:2" # vowel "[a o]/2"
+    , s "casio casio:1 casio:2*2"
+]
+
+d1 $ cat [ -- concate cycles, i.e. for this 2 cycle
+    s "bd sn:2" # vowel "[a o]/2"
+    , s "casio casio:1 casio:2*2"
+]
+
+d1 $ randcat [ -- random pick one..
+    s "bd sn:2" # vowel "[a o]/2"
+    , s "casio casio:1 casio:2*2"
+]
+
+d1 $ stack [ -- play at same time
+    s "bd sn:2" # vowel "[a o]/2"
+    , s "casio casio:1 casio:2*2"
+]
+
+-- cut and legato
+d1 $ sound (samples "arpy*8" (run 8)) # speed "0.25" # cut 1
+
+d1 $ sound (samples "arpy*8" (run 8)) # speed "0.25" # legato 1
+
+-- transitions
+
+d1 $ sound (samples "hc*8" (iter 4 $ run 4))
+
+xfadeIn 1 16 $ sound "bd(5,8)" 
+
+-- Synths
+d1 $ midinote "60 62*2" # s "supersaw"
+
+d1 $ n "c5 d5" # s "supersaw"
+
+d1 $ n "<[a5,cs5,e5,g5]*3 [d5,fs5,g5,c5]>" # s "supersquare" # gain "0.7"
+
+d2 $ every 4 (rev) $ n "<[g5 df5 e5 a5] [gf5 d5 c5 g5]*3>" # s "supersaw"
+
+d1 $ every 16 (density 24 . (|+| midinote "24") . (# sustain "0.3") . (# attack "0.05"))
+ $ s "supercomparator/4" # midinote ((irand 24) + 24)
+ # sustain "8" # attack "0.5" # hold "4" # release "4"
+ # voice "0.5" # resonance "0.9" # lfo "1" # speed "30" # pitch1 "4"
+
+
+d2 $ every 4 (echo (negate 3/32)) $ n "c5*4" # s "supernoise"
+ # accelerate "-2" # speed "1" # sustain "0.1 ! ! 1" # voice "0.0"
+
+d1 $ n "[c2 e3 g4 c5 c4 c3]*4" # s "superchip" # sustain "0.1"
+ # pitch2 "[1.2 1.5 2 3]" 
+ # pitch3 "[1.44 2.25 4 9]" 
+ # voice (slow 4 "0 0.25 0.5 0.75") # slide "[0 0.1]/8" # speed "-4"
+
+d1 $ n "[c2 e3 g4 c5 c4 c3]/3" # s "[superpwm supersaw supersquare]/24" # sustain "0.5" # voice "0.9" # semitone "7.9" # resonance "0.3" # lfo "3" # pitch1 "0.5" # speed "0.25 1"
+
+hush

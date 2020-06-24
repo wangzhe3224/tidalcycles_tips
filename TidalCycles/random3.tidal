@@ -1,0 +1,24 @@
+-- nudge: change how node schedule in the future.
+-- spaceOut: try to fin a pattern into 1 cycle 
+-- stut
+-- stut'
+-- off
+setcps (120/60/4)
+
+d1 $ s "cp*8" # nudge (slow 4 $ sine)
+
+d1 $ spaceOut [1,0.95..0.1] $ s "cp*4"
+
+
+do 
+    let prog = "c a d g"
+        chord = "'maj 'min 'min 'maj"
+    d1 $ slow 4 $ stack [
+        n (prog |+| chord) # s "supervibe" # gain "0.8"
+        , arp "up" $ n (prog |+| chord) # s "superpiano"
+        ]
+    d2 $ stack [
+        spaceOut [1] $ s "bd [sn:3 hh] hh"
+        ] 
+
+hush
