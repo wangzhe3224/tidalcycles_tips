@@ -1,0 +1,20 @@
+setcps (131/60/4)
+
+d1 
+--   $ superimpose (
+--       (hurry "h") . (# pan (sine))
+--      . (stutWith 6 "[e|q]" (
+--          (|+ n 8) . (# coarse 4) . (sometimes (# crush 1))
+--      ))
+--   )
+  $ superimpose (
+      (hurry "q") . (sometimes (|+ n 3))
+  )
+  $ chunk 5 (|- n 8)
+  $ chunk 3 (|- n 3)
+  $ rarely (|+ note 3)
+  $ n "{0*4 5*4 3*4}%2"
+  # s "arpy:3"
+  # waveloss ( trigger 1 $ range 0 100 $ slow 12 $ envL)
+
+hush
