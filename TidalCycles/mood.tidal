@@ -18,7 +18,6 @@ d1
       . (rarely (chop 4))
       . (sometimes (chop 4))
       . (|* speed 0.4)
-      . (every 4 (|* speed (5/4)))
       . (every 8 (|* speed (5/3)))
       ,
       id
@@ -38,14 +37,66 @@ d1
   ]
   $ s "gtr" >| n "2 4" # waveloss (trigger 1 $ range 0 100 $ slow 64 $ envL)
 
-d2 $ rarely (rev) 
+setcps (126*2/60/4)
+
+d2 $ slow 4
    $ sometimes (fast 2) 
    $ rarely (# lpf 100)
    $ stack [
-        sometimes (# crush 2) $ s "sn(3,8)" 
-        , sometimes (# crush 3) $ s "hh*4? bd" # gain 1.2 # orbit 6
+        s "bd*16"
+        , sometimes (# crush 2) $ s "sn(3,8)" 
+        , often (# crush 3) $ s "hh*4? [bd]" # gain 1.2 # orbit 6
         , sometimes (fast 4) $ s "sn:8?" # gain 1.4
+        , sometimes rev $ sometimes (# crush 1) $ s "arpy" +| speed "-1 0 1 0" +| n "2 4 8 3"
     ] 
     # gain "1.2"
+  
+d1 $ 
+  layer [
+    id
+    . (rarely (chop 3))
+    . (rarely (chop 4))
+    . (sometimes (chop 4))
+    . (|* speed 0.4)
+    . (every 8 (|* speed (5/3)))
+    ,
+    id
+    . (every 4 (|* speed (4/5)))
+    . (|* speed 3)
+    . (# gain 1)
+    . (euclid 3 8)
+    . (slow 4)
+    . (# orbit 6)
+    . (# room 2)
+    , 
+    id
+    . (every 2 (slow 2))
+    . (every 3 (|* speed 3))
+    . (slice 8 "3 9 4 2") 
+    . (every 4 (|* speed (4/5)))
+    . (# orbit 5)
+    . (# room 3)
+    . (# size 0.8)
+  ]
+  $ s "gtr:1" # waveloss (trigger 1 $ range 0 100 $ slow 64 $ envL) 
+
+hush
+
+d3 $ 
+   layer [
+    id
+    . (every 4 (|* speed (4/5)))
+    . (|* speed 3)
+    . (# gain 0.8)
+    . (euclid 3 8)
+    . (slow 4)
+    . (# orbit 6)
+    ,
+    id
+    . (sometimes (chop 4))
+    . (|* speed 0.4)
+   ]
+   $ sometimes rev $ rarely (jux rev) 
+   $ sometimes (off 0.25 (|+ speed "2")) $ sometimes (hurry 2) $ n "c e g ~" # s "supersaw" # room 1 # size 0.8
 
 hush
