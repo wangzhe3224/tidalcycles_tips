@@ -1,0 +1,17 @@
+setcps (120/60/4)
+
+d1 $ stack [ 
+        -- degradeBy 0.5 $
+        slow 5 $  
+        striate 2024 
+        $ s "xiaomotuo:2"
+        # lpf 2000
+        -- , 
+        -- s "bd*2"
+    ]
+
+d2 $ s "xiaomotuo:2"
+
+d3 $ s "bd"
+
+hush

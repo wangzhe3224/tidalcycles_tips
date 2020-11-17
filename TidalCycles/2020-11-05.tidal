@@ -1,0 +1,46 @@
+-- practice
+
+d1 $ stack [
+    foldEvery [7, 8] (0.25 <~) $ 
+    s "bd ~ hh ~"
+    ,
+    -- foldEvery [4] (iter' 4 . fast 2) -- (0.24 <~)
+    s "superchip" # n "<2 2 0 0>" -- n (wchoose [(4, 0.9), (3, 0.1)]) 
+    # gain 0.6
+    # slide "<0 [1 ~!3] 1 -2>"
+    # cut 1
+    ]
+
+d2 $ stack [
+        slow 2 $ s "tablex:3" # unit "d" # speed 0.5
+        , s "~ hh ~ hh"
+        , s "bd!2"
+    ] # orbit 2 
+    # room 1 # size 0.2 # lpf 6000
+
+d3 $ stack [ 
+        s "bd<4,5> hh" 
+        , slow 2 $ note "e2 d2" # s "arpy" # crush 4
+        , stut "<1 3>" 0.1 (3/16) $        
+            ((1/4) ~>) $ note "[e4, g4, b4]!2" # s "arpy"
+    ] # orbit 1
+    # resonance 0.15
+
+d1 $ stack [
+    stack [
+        s "bd!2"
+        , stack [
+                ((1/4) ~>) $ s "hh!2" # gain 1.2
+                , slow 2 $ s "tablex:1" # unit "c" # speed 0.5
+            ] # cut 1                      -- same cut group
+        ] # orbit 2                        -- same orbit for the whole stack
+          # room 0.7 # size 0.5 # lpf 6000 -- same fx for the whole orbit
+    , stack [
+        slow 2 $ note "e2 d2" # s "arpy" # crush 6
+        , stut "<1 3>" 0.1 (3/16) $        -- use stut to fake delays
+            ((1/4) ~>) $ note "[e4, g4, b4]!2" # s "arpy"
+        ] # orbit 1                        -- separate orbit for the whole stack
+          # lpf 1200 # resonance 0.15      -- applies only this orbit
+    ]
+
+hush

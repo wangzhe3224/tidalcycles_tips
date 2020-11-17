@@ -1,0 +1,19 @@
+setcps 0.5
+
+d1 $ stack [
+    n "0(5,8) [2 0]" # s "808"
+    , s "blip:1*4"
+]
+
+
+d2  
+    $ degrade
+    $ ply 3
+    $ slow 2
+    $ struct "t(5, 8) [[~ t] t]"
+    $ s "arpy" 
+    # n "<-5!7 0!7>"
+    # octave 3
+
+
+hush

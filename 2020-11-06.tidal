@@ -1,0 +1,22 @@
+-- 今天比较无聊。。这里是TidalCycle
+
+d1 
+   $ whenmod 16 4 (|+| 3)
+   $ jux (rev . (# s "jv").chunk 4 (iter 4))
+   $ off 0.125 (|+| 12)
+   $ off 0.25 (|+| 7)
+   $ n "[ d3(3,8) f3(3,8) e3(3,8,2) a3(3,8,2) ]/2" # s "superpiano"
+   # room 0.5 # size 0.6
+   # lpf (range 200 8000 $ slow 2 $ sine)
+   # resonance ( range 0.03 0.6 $ slow 2 $ cosine)
+   # pan (range 0.1 0.9 $ rand) 
+
+--- y有点感觉了。。。。
+---- g感觉需要更多d的鼓！！！
+
+-- h还是x需要 鼓。。不然b不爽
+d2 $ fast 4 $ "bd ~" # gain 1.4
+
+d3 $ s "[gabba*4, hh*8, [~ cp]*2]" # gain 1.2
+
+-- h哈哈 不玩了  x希望n你们喜欢！！！！：）
