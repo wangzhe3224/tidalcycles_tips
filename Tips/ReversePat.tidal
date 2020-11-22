@@ -5,11 +5,16 @@ let
     inverse 0 = 1
 
 do 
-    let pat = "[1 0 0 0 1 0 1 1]"
-    d1 $ gain pat # s "drum"
-    d2 $ gain (inverse <$> pat) # s "cp"
-    d3 $ foldEvery [2,3] (0.25 <~) $ gain (pat) # s "ch"
-    d4 $ foldEvery [3,4] (0.5 <~) $ gain (inverse <$> pat) # s "s"
+    let pat = "[1 0 1 1 0 1 0 1]"
+    d1 $ sometimes (fast 2) $ stack [
+          gain pat # s "drum" # n "1!4 2!8 4!4"
+        , gain (inverse <$> pat) # s "cp"
+        , sometimes (0.125 <~) $ foldEvery [2,3] (0.25 <~) $ gain (pat) # s "sn" # n "1 2 3"
+        , sometimes (0.125 <~) $ foldEvery [3,4] (0.5 <~) $ gain (inverse <$> pat) # s "hh" # n "1(3,8) 2(4, 8)"
+        ]
+        # legato 2
+        # lpf (range 500 4000 tri)
+        # pan rand 
 
 -- basically Pattern is a Functor, that's why inverse can be used to Pattern
 
