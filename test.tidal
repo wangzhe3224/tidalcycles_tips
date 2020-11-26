@@ -1,0 +1,25 @@
+d1 $ weave 16 (pan sine)
+  [sound "bd sn cp",
+   sound "casio casio:1",
+   sound "[jvbass*2 jvbass:2]/2",
+   sound "hc*4"
+  ]
+
+d4 $ n (arpg "'major7 [0,4,7,11]") # sound "superpiano"
+
+d2 $ jux rev $ n "1 3 4" # s "jazz"   
+
+d3 $ jux (sometimes (rev))
+   $ striate 1
+   $ fast 2
+   $ (0.125 <~) 
+   $ (0.25 <~)
+   $ (0.0875 <~)
+   $ n (arp "up down" "<c'maj g'maj> f'maj a'min" ) 
+   # s "superpiano" # legato 1
+   # room (choose [0, 0.5, 1]) 
+   # delay 0.4
+   # gain (range 0.2 1 sine)
+   # pan (range ( -1 ) 1 tri)
+
+chordList
