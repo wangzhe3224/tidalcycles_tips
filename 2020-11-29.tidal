@@ -1,0 +1,25 @@
+-- some rythm stuff.
+d1 $ jux rev $ sometimes (rev) $ iter 4 $ s "bd*2 [bd@2 [hh sn]]"
+
+d1 $ slow 32 $ jux ((# speed "0.5") . rev) $ striate' 64 (1/16) $ sound "bev"
+
+d1 $ iter 4 $ s "hh(3,8,2)" 
+
+d1 $ s "bd [hh@2 [sn:2 sn!2]]"
+
+d1 $ layer [
+            id 
+            , rev, fast 2
+            , (sometimes ( fast 2 ) . (0.125 <~))
+            , (0.55 <~)
+            , (# crush 3)
+            , (# speed 2)
+   ] $ sound "sn:2 [~ hh:6]"
+
+
+d1 $ slow 16 $ sound $ step' ["feel:0", "sn:1", "bd:0"] (take 512 $ lindenmayer 5 "0:1~~~,1:0~~~2~~~~~0~~~2~,2:2~1~,~:~~1~" "0")
+
+d1 $ mask "t t t ~ t t ~ t"
+  $ s (cat ["sn*8", "[cp*4 bd*4, bass*5]"])
+  # n (run 8)
+
